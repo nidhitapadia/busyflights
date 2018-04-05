@@ -3,7 +3,7 @@
 - Implemented BusyFlightsSearch api for endpoint /v1/api/busyflights
 - Implemented Mock API for crazyair and toughjet (for testing).
 - Input field validations.
-
+- Added swagger
 
 #### Possible changes
 - Improve API Exception handling with proper error codes and messages
