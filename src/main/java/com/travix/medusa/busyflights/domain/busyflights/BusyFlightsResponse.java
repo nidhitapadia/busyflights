@@ -5,12 +5,16 @@ import java.time.ZonedDateTime;
 public class BusyFlightsResponse {
 
     private String airline;
-    private String supplier;
+    private Supplier supplier;
     private String fare;
     private String departureAirportCode;
     private String destinationAirportCode;
     private ZonedDateTime departureDate;
     private ZonedDateTime arrivalDate;
+
+    public BusyFlightsResponse(Supplier supplier) {
+        this.supplier = supplier;
+    }
 
     /**
      * Getter for property 'airline'.
@@ -35,17 +39,8 @@ public class BusyFlightsResponse {
      *
      * @return Value for property 'supplier'.
      */
-    public String getSupplier() {
+    public Supplier getSupplier() {
         return supplier;
-    }
-
-    /**
-     * Setter for property 'supplier'.
-     *
-     * @param supplier Value to set for property 'supplier'.
-     */
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
     }
 
     /**
