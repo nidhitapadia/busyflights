@@ -1,9 +1,11 @@
-package com.travix.medusa.busyflights.service;
+package com.travix.medusa.busyflights.service.toughjet;
 
 import com.travix.medusa.busyflights.domain.busyflights.BusyFlightsRequest;
 import com.travix.medusa.busyflights.domain.busyflights.BusyFlightsResponse;
 import com.travix.medusa.busyflights.domain.toughjet.ToughJetRequest;
 import com.travix.medusa.busyflights.domain.toughjet.ToughJetResponse;
+import com.travix.medusa.busyflights.service.RetrieveFlightsService;
+import com.travix.medusa.busyflights.service.SearchFlightsService;
 import com.travix.medusa.busyflights.util.ConversionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +28,8 @@ import static com.travix.medusa.busyflights.domain.busyflights.Supplier.ToughJet
  * The type Tough jet search flight.
  */
 @Service
-public class ToughJetSearchFlightService implements SearchFlightService<ToughJetRequest, ToughJetResponse> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ToughJetSearchFlightService.class);
+public class ToughJetSearchFlightsService implements SearchFlightsService<ToughJetRequest, ToughJetResponse> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ToughJetSearchFlightsService.class);
 
     @Value("${provider.toughjet.endpoint}")
     private String toughjetEndpoint;
@@ -36,7 +38,7 @@ public class ToughJetSearchFlightService implements SearchFlightService<ToughJet
     private String toughjetKey;
 
     @Autowired
-    private RetrieveFlightDetailsFromSupplier retrieveFlightDetailsFromSupplier;
+    private RetrieveFlightsService retrieveFlightsService;
 
     @Override
     public ToughJetRequest convertRequest(BusyFlightsRequest busyFlightsRequest) {
@@ -55,7 +57,7 @@ public class ToughJetSearchFlightService implements SearchFlightService<ToughJet
     @Override
     public List<ToughJetResponse> performSearch(ToughJetRequest request) {
         try {
-            return Arrays.asList(retrieveFlightDetailsFromSupplier.callApi(toughjetEndpoint, toughjetKey, request, ToughJetResponse[].class));
+            return Arrays.asList(retrieveFlightsService.callApi(toughjetEndpoint, toughjetKey, request, ToughJetResponse[].class));
         } catch (RestClientException restClientException) {
             //Process does not stop if one service fails to give details. Error is logged.
             LOGGER.error("Received RestClientException with message ({}) while getting flight details from ToughJet api", restClientException.getMessage());

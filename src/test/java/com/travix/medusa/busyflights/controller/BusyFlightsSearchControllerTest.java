@@ -8,8 +8,8 @@ import com.travix.medusa.busyflights.mock.MockBusyFlightRequest;
 import com.travix.medusa.busyflights.mock.MockCrazyAirResponse;
 import com.travix.medusa.busyflights.mock.MockToughJetResponse;
 import com.travix.medusa.busyflights.service.BusyFlightsSearchService;
-import com.travix.medusa.busyflights.service.CrazyAirSearchFlightService;
-import com.travix.medusa.busyflights.service.ToughJetSearchFlightService;
+import com.travix.medusa.busyflights.service.crazyair.CrazyAirSearchFlightsService;
+import com.travix.medusa.busyflights.service.toughjet.ToughJetSearchFlightsService;
 import com.travix.medusa.busyflights.util.BusyFlightsConstant;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -48,10 +48,10 @@ public class BusyFlightsSearchControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private CrazyAirSearchFlightService crazyAirSearchFlightService;
+    private CrazyAirSearchFlightsService crazyAirSearchFlightsService;
 
     @MockBean
-    private ToughJetSearchFlightService toughJetSearchFlightService;
+    private ToughJetSearchFlightsService toughJetSearchFlightsService;
 
     @InjectMocks
     private BusyFlightsSearchService busyFlightsSearchService;
@@ -65,12 +65,12 @@ public class BusyFlightsSearchControllerTest {
     public void init() {
         MockitoAnnotations.initMocks(this);
         JacksonTester.initFields(this, objectMapper);
-        ReflectionTestUtils.setField(busyFlightsSearchService, "searchFlightServices", Arrays.asList(crazyAirSearchFlightService, toughJetSearchFlightService));
+        ReflectionTestUtils.setField(busyFlightsSearchService, "searchFlightsServices", Arrays.asList(crazyAirSearchFlightsService, toughJetSearchFlightsService));
         ReflectionTestUtils.setField(busyFlightsSearchController, "busyFlightsSearchService", busyFlightsSearchService);
-        given(crazyAirSearchFlightService.performSearch(any(CrazyAirRequest.class))).willReturn(MockCrazyAirResponse.mock());
-        given(crazyAirSearchFlightService.convertResponse(any(List.class))).willCallRealMethod();
-        given(toughJetSearchFlightService.performSearch(any(ToughJetRequest.class))).willReturn(MockToughJetResponse.mock());
-        given(toughJetSearchFlightService.convertResponse(any(List.class))).willCallRealMethod();
+        given(crazyAirSearchFlightsService.performSearch(any(CrazyAirRequest.class))).willReturn(MockCrazyAirResponse.mock());
+        given(crazyAirSearchFlightsService.convertResponse(any(List.class))).willCallRealMethod();
+        given(toughJetSearchFlightsService.performSearch(any(ToughJetRequest.class))).willReturn(MockToughJetResponse.mock());
+        given(toughJetSearchFlightsService.convertResponse(any(List.class))).willCallRealMethod();
     }
 
     @Test

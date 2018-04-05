@@ -19,7 +19,7 @@ public class BusyFlightsSearchService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BusyFlightsSearchService.class);
 
     @Autowired
-    private List<SearchFlightService> searchFlightServices;
+    private List<SearchFlightsService> searchFlightsServices;
 
     /**
      * Search flights for busyFlightsRequest
@@ -27,19 +27,19 @@ public class BusyFlightsSearchService {
      * @param busyFlightsRequest the busyFlightsRequest
      */
     public List<BusyFlightsResponse> searchFlights(BusyFlightsRequest busyFlightsRequest) {
-         return searchFlightServices.parallelStream()
+         return searchFlightsServices.parallelStream()
                  .map(sf -> getList(busyFlightsRequest, sf))
                  .flatMap(List::stream)
                  .sorted(Comparator.comparing(bf -> Double.valueOf(bf.getFare())))
                  .collect(Collectors.toList());
     }
 
-    private List<BusyFlightsResponse> getList(BusyFlightsRequest busyFlightsRequest, SearchFlightService searchFlightService) {
+    private List<BusyFlightsResponse> getList(BusyFlightsRequest busyFlightsRequest, SearchFlightsService searchFlightsService) {
         List<BusyFlightsResponse> response = null;
         try {
-            response = searchFlightService.convertResponse(searchFlightService.performSearch(searchFlightService.convertRequest(busyFlightsRequest)));
+            response = searchFlightsService.convertResponse(searchFlightsService.performSearch(searchFlightsService.convertRequest(busyFlightsRequest)));
         } catch (Exception exception) {
-            LOGGER.error("Received exception while retrieving flight details for busyFlightsRequest ({}) and searchFlightService ({})", busyFlightsRequest, searchFlightService.getClass().getName());
+            LOGGER.error("Received exception while retrieving flight details for busyFlightsRequest ({}) and searchFlightsService ({})", busyFlightsRequest, searchFlightsService.getClass().getName());
         }
         return response;
     }

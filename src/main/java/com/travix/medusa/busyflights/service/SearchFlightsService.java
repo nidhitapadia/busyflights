@@ -11,7 +11,7 @@ import java.util.List;
  * @param <T> the supplier request type
  * @param <R> the supplier response type
  */
-public interface SearchFlightService<T, R> {
+public interface SearchFlightsService<T, R> {
     /**
      * Convert BusyFlightsRequest to supplier request.
      *

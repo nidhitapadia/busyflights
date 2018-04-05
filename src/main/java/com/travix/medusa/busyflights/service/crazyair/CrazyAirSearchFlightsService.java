@@ -1,9 +1,11 @@
-package com.travix.medusa.busyflights.service;
+package com.travix.medusa.busyflights.service.crazyair;
 
 import com.travix.medusa.busyflights.domain.busyflights.BusyFlightsRequest;
 import com.travix.medusa.busyflights.domain.busyflights.BusyFlightsResponse;
 import com.travix.medusa.busyflights.domain.crazyair.CrazyAirRequest;
 import com.travix.medusa.busyflights.domain.crazyair.CrazyAirResponse;
+import com.travix.medusa.busyflights.service.RetrieveFlightsService;
+import com.travix.medusa.busyflights.service.SearchFlightsService;
 import com.travix.medusa.busyflights.util.ConversionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +27,8 @@ import static com.travix.medusa.busyflights.domain.busyflights.Supplier.CrazyAir
  * The type Crazy air search flight.
  */
 @Service
-public class CrazyAirSearchFlightService implements SearchFlightService<CrazyAirRequest, CrazyAirResponse> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CrazyAirSearchFlightService.class);
+public class CrazyAirSearchFlightsService implements SearchFlightsService<CrazyAirRequest, CrazyAirResponse> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CrazyAirSearchFlightsService.class);
 
     @Value("${provider.crazyair.endpoint}")
     private String crazyAirEndpoint;
@@ -35,7 +37,7 @@ public class CrazyAirSearchFlightService implements SearchFlightService<CrazyAir
     private String crazyAirKey;
 
     @Autowired
-    private RetrieveFlightDetailsFromSupplier retrieveFlightDetailsFromSupplier;
+    private RetrieveFlightsService retrieveFlightsService;
 
     @Override
     public CrazyAirRequest convertRequest(BusyFlightsRequest busyFlightsRequest) {
@@ -55,7 +57,7 @@ public class CrazyAirSearchFlightService implements SearchFlightService<CrazyAir
     public List<CrazyAirResponse> performSearch(CrazyAirRequest request) {
         List<CrazyAirResponse> responses = null;
         try {
-            responses = Arrays.asList(retrieveFlightDetailsFromSupplier.callApi(crazyAirEndpoint, crazyAirKey, request, CrazyAirResponse[].class));
+            responses = Arrays.asList(retrieveFlightsService.callApi(crazyAirEndpoint, crazyAirKey, request, CrazyAirResponse[].class));
         } catch (RestClientException restClientException) {
             //We do not stop processing if one service fails to give details. Error is logged.
             LOGGER.error("Received RestClientException with message ({}) while getting flight details from CrazyAir api", restClientException.getMessage());

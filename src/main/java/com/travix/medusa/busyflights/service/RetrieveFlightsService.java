@@ -13,7 +13,7 @@ import java.util.Arrays;
  * The type Retrieve flight details from supplier.
  */
 @Service
-public class RetrieveFlightDetailsFromSupplier {
+public class RetrieveFlightsService {
 
     @Autowired
     private RestTemplate restTemplate;
