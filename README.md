@@ -1,3 +1,18 @@
+#### Overview of changes done
+- Adjusted domain model to represent proper data types
+- Implemented BusyFlightsSearch api for endpoint /v1/api/busyflights
+- Implemented Mock API for crazyair and toughjet (for testing).
+- Input field validations.
+
+
+#### Possible changes
+- Improve API Exception handling with proper error codes and messages
+- Remove mock API and create separate project for mocking these providers.
+- More input validation on dates and ranges could be added.
+- Supplier request mapping validations
+- Supplier response error handling
+
+
 **Travix - Problem to be solved**
 
 **Background:**
